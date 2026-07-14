@@ -1,4 +1,10 @@
-export type ProjectGroup = "Enterprise & Apps" | "Web3 & Data" | "Full-Stack Commerce";
+export type ProjectGroup =
+  | "Enterprise & Apps"
+  | "Enterprise Marketplaces"
+  | "Web3 & Data"
+  | "Full-Stack Commerce"
+  | "Acquisition Ecosystems"
+  | "Embedded Commerce";
 
 export type Project = {
   id: string;
@@ -25,16 +31,20 @@ export const projects: Project[] = [
     impact: "Helped connect acquisition UX to measurable qualified-lead and organic-discovery outcomes.",
     className: "md:col-span-2 md:row-span-2"
   },
-  {
+ {
     id: "momobil",
     title: "momobil.id",
-    group: "Enterprise & Apps",
-    summary: "Used-car marketplace surface with comparison-led browsing and campaign-ready lead generation.",
+    group: "Enterprise Marketplaces",
+    summary: "An automotive commerce ecosystem engineered for high-intent search, semantic visibility, and precision lead generation.",
     details:
-      "Worked across responsive listing, detail, and inquiry surfaces where search behavior, lead quality, and mobile performance were central to the business funnel.",
-    stack: ["React", "TypeScript", "CMS", "GA4", "Tag Manager"],
-    architecture: ["Listing interaction analytics", "SEO-friendly vehicle detail metadata", "Mobile-first conversion tracking"],
-    impact: "A complex catalogue experience condensed into fast, scannable UI.",
+      "Architected responsive, conversion-critical surfaces for a massive enterprise vehicle catalogue. By synthesizing fluid, comparison-led browsing with rigorous analytics (GA4/GTM) and deep SEO metadata, the platform transforms complex automotive inventory into a frictionless, mobile-first acquisition engine.",
+    stack: ["Headless CMS", "Next.js", "Semantic SEO", "GA4 / GTM", "GraphQL"],
+    architecture: [
+      "Granular behavioral telemetry orchestrated to map and optimize high-intent buyer journeys",
+      "Dynamic, semantic metadata architecture designed for aggressive organic search visibility",
+      "Lightning-fast, scannable UI components built to handle sprawling enterprise data payloads"
+    ],
+    impact: "Forged a seamless connection between complex automotive inventory and high-conversion user journeys.",
     className: "md:col-span-1"
   },
   {
@@ -50,15 +60,15 @@ export const projects: Project[] = [
     className: "md:col-span-1"
   },
   {
-    id: "adiraku",
-    title: "adiraku app",
+    id: "arunika",
+    title: "Arunika Studio",
     group: "Enterprise & Apps",
-    summary: "Mobile product ecosystem for financing, servicing, and customer lifecycle interactions.",
+    summary: "Company portfolio and digital presence for a working software and product studio.",
     details:
-      "Supported a broad customer lifecycle surface connected to financing and service journeys, with emphasis on release reliability, observability, and production-quality interaction patterns.",
-    stack: ["Mobile Web", "React", "Design Systems", "Firebase Analytics"],
-    architecture: ["Journey-level analytics", "Reusable interface primitives", "Release-safe feature segmentation"],
-    impact: "A high-surface-area application with mature product engineering concerns.",
+      "Built as a polished company portfolio surface for presenting services, credibility, project context, and technical capability in a concise, conversion-aware format.",
+    stack: ["Next.js", "TypeScript", "Tailwind CSS", "SEO", "Web Design"],
+    architecture: ["Responsive portfolio architecture", "Reusable content sections for services and project proof", "SEO-ready metadata and fast static delivery"],
+    impact: "A focused company presence designed to communicate trust, technical sharpness, and service clarity.",
     className: "md:col-span-2"
   },
   {
@@ -75,12 +85,12 @@ export const projects: Project[] = [
   },
   {
     id: "tinybitty",
-    title: "tinybitty.shop",
+    title: "Tiny Bitty",
     group: "Full-Stack Commerce",
     summary: "Mobile-first cookie commerce and corporate gifting experience with WhatsApp-assisted ordering.",
     details:
       "Designed and developed product browsing, bundles, brand storytelling, cart behavior, and corporate-gifting flows for a premium FMCG cookie brand.",
-    stack: ["Next.js", "TypeScript", "SEO", "Image Optimization", "WhatsApp Ordering"],
+    stack: ["Next.js", "TypeScript", "SEO", "Image Optimization", "UI / UX"],
     architecture: ["SEO-friendly content and product structure", "Optimized image delivery for mobile commerce", "Conversion path from product discovery to assisted order"],
     impact: "Commerce implementation with a practical blend of brand, speed, and conversion thinking.",
     className: "md:col-span-1"
@@ -88,25 +98,33 @@ export const projects: Project[] = [
   {
     id: "mvhome",
     title: "mvhome.id",
-    group: "Full-Stack Commerce",
-    summary: "Full-stack ISP acquisition platform and role-based CMS for broadband service discovery.",
+    group: "Acquisition Ecosystems",
+    summary: "A frictionless onboarding platform for broadband services, powered by interactive diagnostic tools and localized content.",
     details:
-      "Built a Node.js, MySQL, and API-backed platform with customer journeys for coverage checking, product discovery, registration, SEO content, careers, and independent content management.",
-    stack: ["Node.js", "MySQL", "React", "REST APIs", "Role-Based CMS"],
-    architecture: ["Reusable data modules for products, articles, leads, jobs, FAQs, users, banners, and legal content", "Filtering and pagination for operational CMS workflows", "Responsive acquisition and onboarding journeys"],
-    impact: "A full-stack client platform spanning acquisition UX, APIs, and internal content operations.",
+      "Designed a complete end-to-end user journey for a modern ISP. By weaving custom bandwidth speed tests and area coverability mapping into the interface, the platform empowers users to validate service instantly before seamlessly transitioning into a dynamic, CMS-driven registration flow.",
+    stack: ["Node.js", "Next.js", "MySQL", "Interactive Data", "Content Architecture"],
+    architecture: [
+      "Real-time service validation via integrated speed diagnostics and area mapping",
+      "Centralized CMS dashboard orchestrating products, dynamic promotional banners, and localized (EN-ID) articles",
+      "Scalable REST API backbone linking frontend intent with internal operational workflows"
+    ],
+    impact: "Streamlined the telecom acquisition funnel by merging interactive network diagnostics with automated service onboarding.",
     className: "md:col-span-1"
   },
   {
     id: "tokyo-crumb",
-    title: "Tokyo Crumb order widget",
-    group: "Full-Stack Commerce",
-    summary: "Embeddable ordering widget optimized for quick selection, cart clarity, and low-friction repeat orders.",
+    title: "Tokyo Crumb",
+    group: "Embedded Commerce",
+    summary: "A portable, state-driven micro-storefront engineered to eliminate checkout friction and accelerate repeat conversions.",
     details:
-      "A compact full-stack widget pattern with stateful ordering, analytics events, and responsive behavior for embedded contexts.",
-    stack: ["TypeScript", "React", "API Routes", "Payment UX"],
-    architecture: ["Embeddable state machine", "Cart and order telemetry", "Lightweight API integration"],
-    impact: "A small surface with strong product-thinking density.",
+      "Designed a highly embeddable, headless ordering interface that brings the point of sale directly into any digital context. By combining fluid state transitions with an intuitive selection UX, the component transforms passive traffic into immediate transactions without interrupting the user's flow.",
+    stack: ["TypeScript", "React", "Headless UI", "Behavioral Telemetry"],
+    architecture: [
+      "Portable state-machine architecture designed for seamless cross-environment embedding",
+      "Real-time cart telemetry and granular event tracking for conversion analytics",
+      "Zero-friction payment routing via a lightweight, edge-optimized API layer"
+    ],
+    impact: "Proves that highly dense, meticulously optimized micro-interactions can drastically shorten the path to purchase.",
     className: "md:col-span-2"
   }
 ];

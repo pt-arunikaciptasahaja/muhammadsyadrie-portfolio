@@ -10,7 +10,7 @@ const outroStates = [
     eyebrow: "Full-stack software engineer"
   },
   {
-    label: "Contact me",
+    label: "Connect.",
     eyebrow: "Available for global roles"
   }
 ];
