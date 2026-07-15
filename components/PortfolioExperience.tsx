@@ -14,12 +14,12 @@ import { StickyScrollSection } from "@/components/StickyScrollSection";
 import { Project, projects } from "@/data/projects";
 
 const badges = [
-  { label: "Growth Infrastructure", Icon: Triangle },
-  { label: "AI-Driven Workflows", Icon: Diamond },
-  { label: "Performance Optimization", Icon: Circle },
-  { label: "Conversion Engineering", Icon: Square },
-  { label: "Scalable Operations", Icon: Hexagon },
-  { label: "Digital Resilience", Icon: Octagon }
+  { label: "Growth Infrastructure", mobileLabel: "Growth Infra", Icon: Triangle },
+  { label: "AI-Driven Workflows", mobileLabel: "AI Workflows", Icon: Diamond },
+  { label: "Performance Optimization", mobileLabel: "Performance", Icon: Circle },
+  { label: "Conversion Engineering", mobileLabel: "Conversion", Icon: Square },
+  { label: "Scalable Operations", mobileLabel: "Scale Ops", Icon: Hexagon },
+  { label: "Digital Resilience", mobileLabel: "Resilience", Icon: Octagon }
 ];
 const impactStats = [
   { value: "-50%", label: "Infrastructure Overhead" },
@@ -34,9 +34,9 @@ export function PortfolioExperience() {
     <main className="relative isolate min-h-screen overflow-x-clip">
       <MouseGlow />
 
-      <section className="relative flex min-h-screen items-center px-4 py-24 sm:px-6 lg:px-8">
+      <section className="relative flex min-h-[96svh] items-end bg-abyss px-4 pb-10 pt-[38svh] sm:min-h-[138svh] sm:px-6 sm:pb-24 sm:pt-[76svh] lg:min-h-[132vh] lg:px-8 lg:pb-24 lg:pt-[74vh]">
         <HeroCanvas />
-        <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -47,24 +47,25 @@ export function PortfolioExperience() {
               Cloud-native ecosystems // Web3 interfaces
             </div>
 
-            <h1 className="mt-7 max-w-5xl bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-5xl font-semibold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
+            <h1 className="mt-7 max-w-5xl bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
               Crafting fault-tolerant products and intelligent systems of scale.
             </h1>
 
-            <p className="mt-6 max-w-3xl text-xl font-light leading-snug text-slate-300">
+            <p className="mt-5 max-w-3xl text-base font-light leading-7 text-slate-300 sm:mt-6 sm:text-xl sm:leading-snug">
               Fewer bottlenecks. Infinite leverage.
               <br className="hidden sm:block" />
               I transform complex business logic into automated, high-performing platforms. By integrating applied AI and lean cloud architecture, I engineer systems that cut infrastructure overhead by 50%, reduce bounce rates by 40%, and turn manual processes into seamless digital experiences.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
-              {badges.map(({ label, Icon }) => (
+            <div className="mt-7 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3 md:mt-8">
+              {badges.map(({ label, mobileLabel, Icon }) => (
                 <span
                   key={label}
-                  className="group inline-flex items-center gap-2 rounded-[6px] border border-line bg-white/[0.035] px-3 py-2 text-sm text-slate-200 backdrop-blur transition-all duration-300 hover:border-slate-500"
+                  className="group inline-flex min-w-0 items-center gap-2 rounded-[6px] border border-line bg-white/[0.035] px-2.5 py-2 text-xs text-slate-200 backdrop-blur transition-all duration-300 hover:border-slate-500 sm:px-3 sm:text-sm"
                 >
-                  <Icon className="size-3 fill-platinum/20 text-platinum transition-all duration-300 group-hover:fill-platinum/60" strokeWidth={1} />
-                  {label}
+                  <Icon className="size-3 shrink-0 fill-platinum/20 text-platinum transition-all duration-300 group-hover:fill-platinum/60" strokeWidth={1} />
+                  <span className="truncate sm:hidden">{mobileLabel}</span>
+                  <span className="hidden sm:inline">{label}</span>
                 </span>
               ))}
             </div>

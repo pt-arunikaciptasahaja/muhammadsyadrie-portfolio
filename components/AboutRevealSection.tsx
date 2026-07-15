@@ -14,6 +14,7 @@ const aboutWords = aboutLines.flatMap((line, lineIndex) =>
     word
   }))
 );
+const mobileAboutCopy = aboutLines.join(" ");
 
 function RevealWord({
   children,
@@ -49,6 +50,24 @@ function RevealWord({
   );
 }
 
+function MobileRevealText({ progress }: { progress: MotionValue<number> }) {
+  const shouldReduceMotion = useReducedMotion();
+  const clipPath = useTransform(progress, [0, 1], ["inset(0 0 100% 0)", "inset(0 0 0% 0)"]);
+
+  return (
+    <p className="relative max-w-5xl text-pretty text-3xl font-semibold leading-[1.12] tracking-tight text-slate-800/80 sm:text-4xl md:hidden">
+      <span>{mobileAboutCopy}</span>
+      <motion.span
+        aria-hidden="true"
+        className="absolute inset-0 text-pretty text-platinum"
+        style={{ clipPath: shouldReduceMotion ? "inset(0 0% 0 0)" : clipPath }}
+      >
+        {mobileAboutCopy}
+      </motion.span>
+    </p>
+  );
+}
+
 export function AboutRevealSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -63,8 +82,8 @@ export function AboutRevealSection() {
   const progressScale = useTransform(smoothProgress, [0, 1], [0.04, 1]);
 
   return (
-    <section ref={sectionRef} className="relative min-h-[280vh] border-y border-line">
-      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
+    <section ref={sectionRef} className="relative min-h-[170svh] border-y border-line md:min-h-[280vh]">
+      <div className="sticky top-0 flex h-[82svh] items-center overflow-hidden px-4 py-4 sm:px-6 md:min-h-screen md:py-24 lg:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_30rem)]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
@@ -78,7 +97,8 @@ export function AboutRevealSection() {
             <div className="relative mb-7">
               <motion.div className="h-px origin-left bg-platinum/70" style={{ scaleX: progressScale }} />
             </div>
-            <p className="max-w-5xl text-pretty text-3xl font-semibold leading-[1.12] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
+            <MobileRevealText progress={smoothProgress} />
+            <p className="hidden max-w-5xl text-pretty font-semibold leading-[1.12] tracking-tight md:block md:text-5xl lg:text-6xl">
               {aboutWords.map(({ lineIndex, word }, index) => (
                 <span key={`${word}-${index}`}>
                   {index > 0 && lineIndex > aboutWords[index - 1].lineIndex ? <br className="hidden sm:block" /> : null}

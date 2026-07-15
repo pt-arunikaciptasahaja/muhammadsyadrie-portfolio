@@ -1,118 +1,129 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Float, Points, PointMaterial, Preload } from "@react-three/drei";
-import { useScroll, useTransform } from "framer-motion";
+import { Center, Environment, Preload, Text3D } from "@react-three/drei";
+import { MotionValue, useScroll } from "framer-motion";
 import * as THREE from "three";
 
-function DataStreams() {
-  const pointsRef = useRef<THREE.Points>(null);
+const text3DProps = {
+  font: "/fonts/helvetiker_bold.typeface.json",
+  size: 1.62,
+  height: 0.34,
+  curveSegments: 16,
+  bevelEnabled: true,
+  bevelSize: 0.052,
+  bevelThickness: 0.095,
+  bevelSegments: 5,
+  letterSpacing: -0.045
+} as const;
+
+type InteractiveTextProps = {
+  scrollYProgress: MotionValue<number>;
+};
+
+function InteractiveText({ scrollYProgress }: InteractiveTextProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const { pointer, viewport, camera } = useThree();
-  const { scrollYProgress } = useScroll();
-  const cameraX = useTransform(scrollYProgress, [0, 0.55, 1], [0, -0.85, 1.15]);
-  const cameraY = useTransform(scrollYProgress, [0, 0.55, 1], [0, 0.55, -0.35]);
-  const cameraZ = useTransform(scrollYProgress, [0, 1], [7.2, 3.95]);
-  const cameraFov = useTransform(scrollYProgress, [0, 1], [52, 68]);
-  const rotationX = useTransform(scrollYProgress, [0, 1], [0, -0.48]);
-  const rotationY = useTransform(scrollYProgress, [0, 1], [0, 2.35]);
-  const groupY = useTransform(scrollYProgress, [0, 1], [0, -1.05]);
-  const groupScale = useTransform(scrollYProgress, [0, 1], [1, 1.42]);
+  const isHoveringRef = useRef(false);
+  const { size } = useThree();
 
-  const particles = useMemo(() => {
-    const positions = new Float32Array(900 * 3);
-
-    for (let i = 0; i < 900; i += 1) {
-      const radius = 1.8 + Math.random() * 3.5;
-      const angle = Math.random() * Math.PI * 2;
-      const height = (Math.random() - 0.5) * 5.5;
-      const index = i * 3;
-
-      positions[index] = Math.cos(angle) * radius;
-      positions[index + 1] = height;
-      positions[index + 2] = Math.sin(angle) * radius;
+  useFrame((state) => {
+    if (!groupRef.current) {
+      return;
     }
 
-    return positions;
-  }, []);
-
-  useFrame((state, delta) => {
     const scroll = scrollYProgress.get();
-    const spinVelocity = 0.055 + scroll * 0.72;
+    const isHovering = isHoveringRef.current;
+    const scrollSpin = scroll * Math.PI * 4;
+    const magnet = isHovering ? 1 : 0;
+    const targetRotationX =
+      THREE.MathUtils.clamp(state.pointer.y * -0.24, -0.22, 0.22) + Math.sin(scroll * Math.PI) * 0.16 + magnet * state.pointer.y * -0.08;
+    const targetRotationY = scrollSpin + THREE.MathUtils.clamp(state.pointer.x * 0.34, -0.32, 0.32) + magnet * state.pointer.x * 0.16;
+    const targetRotationZ = scroll * -0.42 + state.pointer.x * -0.035 + magnet * state.pointer.x * -0.05;
+    const isMobile = size.width < 768;
+    const mobileScale = isMobile ? 0.56 : 1;
+    const targetScale = THREE.MathUtils.lerp(1, 0.62, THREE.MathUtils.clamp(scroll * 1.15, 0, 1)) * mobileScale;
+    const targetX = magnet * state.pointer.x * 0.32;
+    const targetY = THREE.MathUtils.lerp(isMobile ? 0.42 : 0, 1.85, THREE.MathUtils.clamp(scroll * 1.1, 0, 1)) + magnet * state.pointer.y * 0.18;
+    const targetZ = THREE.MathUtils.lerp(0, -0.85, THREE.MathUtils.clamp(scroll, 0, 1));
+    const jelly = magnet * (0.04 + Math.abs(state.pointer.x) * 0.035);
 
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += delta * spinVelocity;
-      pointsRef.current.rotation.z = THREE.MathUtils.lerp(pointsRef.current.rotation.z, scroll * 0.5 + pointer.x * 0.08, 0.065);
-      pointsRef.current.rotation.x = THREE.MathUtils.lerp(pointsRef.current.rotation.x, scroll * -0.35 + pointer.y * 0.16, 0.065);
-      pointsRef.current.scale.setScalar(THREE.MathUtils.lerp(pointsRef.current.scale.x, 1 + scroll * 0.38, 0.055));
-    }
-
-    if (groupRef.current) {
-      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, rotationX.get() + pointer.y * 0.12, 0.06);
-      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, rotationY.get() + pointer.x * 0.28, 0.06);
-      groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, pointer.x * viewport.width * 0.045, 0.055);
-      groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, groupY.get() + pointer.y * viewport.height * 0.045, 0.055);
-      groupRef.current.scale.setScalar(THREE.MathUtils.lerp(groupRef.current.scale.x, groupScale.get(), 0.055));
-    }
-
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, cameraX.get() + pointer.x * 0.45, 0.055);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, cameraY.get() + pointer.y * 0.28, 0.055);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, cameraZ.get(), 0.04);
-    if (camera instanceof THREE.PerspectiveCamera) {
-      camera.fov = THREE.MathUtils.lerp(camera.fov, cameraFov.get(), 0.045);
-      camera.updateProjectionMatrix();
-    }
-    camera.lookAt(0, -scroll * 0.55, 0);
-    state.gl.setClearColor("#0b0f19", 0);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.07);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotationY, 0.085);
+    groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotationZ, 0.06);
+    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetX, isHovering ? 0.105 : 0.055);
+    groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, isHovering ? 0.105 : 0.065);
+    groupRef.current.position.z = THREE.MathUtils.lerp(groupRef.current.position.z, targetZ + magnet * 0.18, 0.065);
+    groupRef.current.scale.x = THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale * (1 + jelly), 0.085);
+    groupRef.current.scale.y = THREE.MathUtils.lerp(groupRef.current.scale.y, targetScale * (1 - jelly * 0.55), 0.085);
+    groupRef.current.scale.z = THREE.MathUtils.lerp(groupRef.current.scale.z, targetScale * (1 + jelly * 0.35), 0.085);
   });
+
+  const handlePointerOver = () => {
+    isHoveringRef.current = true;
+    document.documentElement.style.cursor = "grab";
+  };
+
+  const handlePointerOut = () => {
+    isHoveringRef.current = false;
+    document.documentElement.style.cursor = "";
+  };
 
   return (
     <group ref={groupRef}>
-      <Points ref={pointsRef} positions={particles} stride={3} frustumCulled>
-        <PointMaterial
-          transparent
-          color="#f8fafc"
-          size={0.024}
-          sizeAttenuation
-          depthWrite={false}
-          opacity={0.72}
-          blending={THREE.AdditiveBlending}
-        />
-      </Points>
-
-      <Float speed={1.6} rotationIntensity={0.3} floatIntensity={0.6}>
-        <mesh position={[0.2, 0, 0]} rotation={[0.7, 0.3, 0.15]}>
-          <torusKnotGeometry args={[1.35, 0.006, 180, 16]} />
-          <meshBasicMaterial color="#d1d5db" transparent opacity={0.45} />
-        </mesh>
-      </Float>
-
-      <mesh position={[-1.8, 1.1, -0.8]}>
-        <sphereGeometry args={[0.045, 16, 16]} />
-        <meshBasicMaterial color="#f8fafc" />
-      </mesh>
-      <mesh position={[2.2, -0.85, 0.5]}>
-        <sphereGeometry args={[0.055, 16, 16]} />
-        <meshBasicMaterial color="#cbd5e1" />
-      </mesh>
+      <Center>
+        <group>
+          <Text3D
+            {...text3DProps}
+            position={[0.035, -0.035, -0.085]}
+            onPointerOver={handlePointerOver}
+            onPointerOut={handlePointerOut}
+          >
+            build.
+            <meshBasicMaterial color="#f8fafc" transparent opacity={0.12} depthWrite={false} />
+          </Text3D>
+          <Text3D {...text3DProps} onPointerOver={handlePointerOver} onPointerOut={handlePointerOut}>
+            build.
+            <meshPhysicalMaterial
+              color="#f8fafc"
+              roughness={0.18}
+              metalness={0}
+              clearcoat={1}
+              clearcoatRoughness={0.22}
+              transmission={0}
+              transparent
+              opacity={0.88}
+              envMapIntensity={0.48}
+              reflectivity={0.32}
+            />
+          </Text3D>
+        </group>
+      </Center>
     </group>
   );
 }
 
 export function HeroCanvas() {
+  const { scrollYProgress } = useScroll();
+
   return (
-    <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-x-0 top-0 z-0 h-[52svh] w-full overflow-hidden sm:h-screen">
       <Canvas
-        camera={{ position: [0, 0, 7.2], fov: 52 }}
-        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 5.2], fov: 42 }}
+        dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
-        <ambientLight intensity={0.7} />
-        <DataStreams />
+        <color attach="background" args={["#0b0f19"]} />
+        <ambientLight intensity={0.58} />
+        <directionalLight position={[3.5, 3.5, 4]} intensity={1.7} color="#f8fafc" />
+        <pointLight position={[-3, -1.5, 3]} intensity={1.35} color="#94a3b8" />
+        <pointLight position={[2.4, 1.8, 2.2]} intensity={1.8} color="#f8fafc" />
+        <pointLight position={[0, 0, 1.65]} intensity={0.7} color="#ffffff" />
+        <InteractiveText scrollYProgress={scrollYProgress} />
+        <Environment preset="studio" background={false} environmentIntensity={0.45} />
         <Preload all />
       </Canvas>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(11,15,25,0.18),rgba(11,15,25,0.88)_72%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(248,250,252,0.08),rgba(11,15,25,0.42)_38%,rgba(11,15,25,0.92)_78%)]" />
     </div>
   );
 }

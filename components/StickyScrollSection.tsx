@@ -17,8 +17,8 @@ const sections: CapabilitySection[] = [
   {
     title: "Deploy Any Product Surface",
     eyebrow: "Full-stack acquisition platforms",
-    body: "Build enterprise web platforms, CMS systems, lead-generation journeys, and marketplace interfaces with a maintainable Next.js and API foundation.",
-    proof: "Modernized Ember.js surfaces into Next.js and contributed to momotor.id as a high-traffic automotive financing acquisition channel.",
+    body: "Build enterprise web platforms, CMS systems, lead-generation journeys, and marketplace interfaces that convert complex business problems into maintainable digital systems.",
+    proof: "Translate client acquisition, operational, and content-management needs into fast product surfaces with a reliable Next.js and API foundation.",
     tags: ["Next.js", "React", "TypeScript", "GraphQL"],
     gradient: "from-white/20 via-transparent to-slate-500/12"
   },
@@ -34,7 +34,7 @@ const sections: CapabilitySection[] = [
     title: "Scale Reliability",
     eyebrow: "Cloud, DevOps, and quality",
     body: "Keep production systems observable, secure, release-ready, and cost-aware across cloud infrastructure, CI/CD, monitoring, and quality gates.",
-    proof: "Reduced Cloudinary infrastructure cost by 50% through archival workflows, delivery optimization, and lifecycle improvements.",
+    proof: "Reduced media infrastructure cost by 50% through archival workflows, delivery optimization, and lifecycle improvements.",
     tags: ["GCP", "Docker", "Jenkins", "Kibana"],
     gradient: "from-slate-200/22 via-transparent to-white/16"
   },
@@ -108,20 +108,20 @@ function DeployVisual() {
         <span className="size-3 rounded-full bg-white/70" />
         <span className="size-3 rounded-full bg-white/35" />
         <span className="size-3 rounded-full bg-white/20" />
-        <span className="ml-3 font-mono text-xs text-slate-500">deploy-acquisition-platform.ts</span>
+        <span className="ml-3 font-mono text-xs text-slate-500">deploy-client-platform.ts</span>
       </div>
-      <pre className="overflow-x-auto p-5 font-mono text-sm leading-7 text-slate-300">
+      <pre className="overflow-x-auto p-4 font-mono text-xs leading-6 text-slate-300 md:p-5 md:text-sm md:leading-7">
         <code>
           <span className="text-slate-300">const</span> <span className="text-platinum">platform</span> = <span className="text-platinum">await</span>{" "}
           <span className="text-platinum">deploy</span>({"\n"}
           {"  "}
-          <span className="text-slate-500">surface</span>: <span className="text-slate-300">&quot;momotor acquisition&quot;</span>,{"\n"}
+          <span className="text-slate-500">surface</span>: <span className="text-slate-300">&quot;client growth platform&quot;</span>,{"\n"}
           {"  "}
           <span className="text-slate-500">runtime</span>: <span className="text-slate-300">&quot;Next.js + GraphQL&quot;</span>,{"\n"}
           {"  "}
           <span className="text-slate-500">telemetry</span>: [<span className="text-slate-300">&quot;GA4&quot;</span>, <span className="text-slate-300">&quot;Clarity&quot;</span>],{"\n"}
           {"  "}
-          <span className="text-slate-500">seo</span>: <span className="text-slate-300">&quot;structured-data-ready&quot;</span>{"\n"}
+          <span className="text-slate-500">outcome</span>: <span className="text-slate-300">&quot;lower-friction acquisition&quot;</span>{"\n"}
           {"});"}
         </code>
       </pre>
@@ -142,7 +142,7 @@ function GrowthVisual() {
         </div>
         <div className="space-y-3">
           {["Organic search", "Campaign lead", "Article conversion", "Finance application"].map((label, index) => (
-            <div key={label} className="grid grid-cols-[9rem_1fr] items-center gap-3 text-sm text-slate-300">
+            <div key={label} className="grid gap-2 text-sm text-slate-300 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-3">
               <span>{label}</span>
               <div className="h-2 rounded-full bg-white/10">
                 <motion.div
@@ -188,7 +188,7 @@ function ReliabilityVisual() {
       <div className="rounded-[8px] border border-white/20 bg-white/10 p-5">
         <p className="font-mono text-xs uppercase tracking-[0.22em] text-platinum">cost optimization</p>
         <p className="mt-3 text-4xl font-semibold tracking-tight text-platinum">50% lower</p>
-        <p className="mt-2 text-sm leading-6 text-slate-300">Cloudinary media infrastructure cost through archival and delivery lifecycle work.</p>
+        <p className="mt-2 text-sm leading-6 text-slate-300">Media infrastructure cost through archival, delivery optimization, and lifecycle work.</p>
       </div>
     </div>
   );
@@ -250,6 +250,55 @@ function ActiveVisual({ activeIndex }: { activeIndex: number }) {
   );
 }
 
+function MobileVisualBox({ activeIndex }: { activeIndex: number }) {
+  return (
+    <motion.div
+      className="relative mt-8 overflow-hidden rounded-[8px] border border-white/10 bg-black/40 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.36)] backdrop-blur-md md:hidden"
+      initial={{ opacity: 0, y: 18, scale: 0.965, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.35 }}
+      transition={{ type: "spring", stiffness: 180, damping: 24 }}
+    >
+      <motion.div
+        className="absolute inset-x-0 top-0 h-px origin-left bg-gradient-to-r from-transparent via-white/70 to-transparent"
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
+        initial={{ x: "-20%" }}
+        whileInView={{ x: "320%" }}
+        viewport={{ once: true, amount: 0.45 }}
+        transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
+      />
+
+      <div className="relative z-10 mb-4 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="grid size-9 place-items-center rounded-[8px] border border-white/10 bg-white/[0.035] text-platinum">
+            <Code2 className="size-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-slate-500">System View</p>
+            <h4 className="truncate text-sm font-semibold tracking-tight text-platinum">{sections[activeIndex].title}</h4>
+          </div>
+        </div>
+        <div className="flex shrink-0 gap-1.5">
+          <span className="size-2 rounded-full bg-white" />
+          <span className="size-2 rounded-full bg-white/60" />
+          <span className="size-2 rounded-full bg-slate-500" />
+        </div>
+      </div>
+
+      <div className="relative z-10 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <ActiveVisual activeIndex={activeIndex} />
+      </div>
+    </motion.div>
+  );
+}
+
 export function StickyScrollSection() {
   const itemRefs = useRef<Array<HTMLElement | null>>([]);
   const activeIndex = useBlockActiveIndex(itemRefs);
@@ -265,7 +314,7 @@ export function StickyScrollSection() {
           </div>
           <h2 className="text-4xl font-semibold tracking-tight text-platinum md:text-6xl">Scale product engineering, without losing business context.</h2>
           <p className="mt-5 text-base leading-7 text-slate-400 md:text-lg">
-            A scroll-synced system view of full-stack delivery, growth instrumentation, cloud reliability, and data-heavy engineering.
+            A scroll-driven view of end-to-end digitalization. Navigating how full-spectrum engineering—from resilient cloud architecture to frictionless user interfaces—transforms complex operations into scalable, high-growth ecosystems.
           </p>
         </div>
 
@@ -312,6 +361,7 @@ export function StickyScrollSection() {
                         </span>
                       ))}
                     </div>
+                    <MobileVisualBox activeIndex={index} />
                   </motion.article>
                 );
               })}
