@@ -56,7 +56,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             onClick={(event) => event.stopPropagation()}
           >
             <div className="grid max-h-[88vh] overflow-y-auto md:grid-cols-[0.92fr_1.08fr]">
-              <div className="relative min-h-64 overflow-hidden border-b border-line bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.12),transparent_18rem),linear-gradient(135deg,rgba(15,23,42,0.2),rgba(11,15,25,0.92))] md:border-b-0 md:border-r">
+              <div className="relative min-h-64 overflow-hidden border-b border-line bg-[radial-gradient(circle_at_30%_20%,rgba(255,89,74,0.16),transparent_18rem),linear-gradient(135deg,rgba(20,63,153,0.38),rgba(26,31,71,0.94))] md:border-b-0 md:border-r">
                 <Image src="/example.png" alt="" fill sizes="(min-width: 768px) 42vw, 100vw" className="object-cover opacity-70 mix-blend-screen" />
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-slate-400/20" />
                 <div className="absolute bottom-4 left-4 rounded-[6px] border border-line bg-abyss/72 px-3 py-2 text-xs font-medium uppercase tracking-[0.24em] text-platinum">

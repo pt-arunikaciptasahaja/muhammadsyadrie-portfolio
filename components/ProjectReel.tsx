@@ -39,7 +39,7 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
   }, [projects]);
 
   return (
-    <div className="rounded-[8px] border border-line bg-panel/70 p-4 shadow-[0_24px_90px_rgba(0,0,0,0.28)] backdrop-blur-xl md:p-6">
+    <div className="rounded-[8px] border border-line bg-panel/70 p-4 shadow-[0_24px_90px_rgba(15,39,95,0.34)] backdrop-blur-xl md:p-6">
       <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-center">
         <div className="flex flex-wrap gap-2">
           {Object.entries(groupedMeta).map(([group, count]) => (
@@ -77,7 +77,7 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
               </AnimatePresence>
               <motion.span
                 key={`${activeProject.id}-${isPaused ? "paused" : "running"}`}
-                className="absolute inset-x-0 bottom-0 h-1 origin-left bg-gradient-to-r from-white via-slate-400 to-slate-200"
+                className="absolute inset-x-0 bottom-0 h-1 origin-left bg-cyan"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: isPaused ? 0 : 1 }}
                 transition={{ duration: SLIDE_DURATION_MS / 1000, ease: "linear" }}
@@ -110,7 +110,7 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
             <button
               type="button"
               onClick={() => onSelect(activeProject)}
-              className="inline-flex items-center gap-2 rounded-[6px] border border-white/30 bg-white/10 px-4 py-2.5 text-sm font-medium text-platinum transition hover:border-white/60 hover:bg-white/15"
+              className="inline-flex items-center gap-2 rounded-[6px] border border-cyan bg-cyan px-4 py-2.5 text-sm font-semibold text-abyss transition hover:bg-cyan-soft"
             >
               Open case study
               <ArrowUpRight className="size-4" />

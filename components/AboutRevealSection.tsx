@@ -8,24 +8,28 @@ const aboutLines = [
   "Leveraging a 15-year foundation across strict banking operations and modern software architecture, I build resilient, data-driven systems. I design digital experiences where deep analytical logic meets seamless user execution."
 ];
 
+const accentWords = new Set(["15-year", "resilient", "digital", "experiences", "execution"]);
+
 const aboutWords = aboutLines.flatMap((line, lineIndex) =>
   line.split(" ").map((word) => ({
     lineIndex,
-    word
+    word,
+    isAccent: accentWords.has(word.toLowerCase().replace(/[.,]/g, ""))
   }))
 );
-const mobileAboutCopy = aboutLines.join(" ");
 
 function RevealWord({
   children,
   index,
   total,
-  progress
+  progress,
+  isAccent = false
 }: {
   children: string;
   index: number;
   total: number;
   progress: MotionValue<number>;
+  isAccent?: boolean;
 }) {
   const shouldReduceMotion = useReducedMotion();
   const segment = 1 / total;
@@ -41,7 +45,7 @@ function RevealWord({
       </motion.span>
       <motion.span
         aria-hidden="true"
-        className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-platinum"
+        className={`absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap ${isAccent ? "text-cyan" : "text-platinum"}`}
         style={{ width: shouldReduceMotion ? "105%" : fill }}
       >
         {children}
@@ -51,19 +55,13 @@ function RevealWord({
 }
 
 function MobileRevealText({ progress }: { progress: MotionValue<number> }) {
-  const shouldReduceMotion = useReducedMotion();
-  const clipPath = useTransform(progress, [0, 1], ["inset(0 0 100% 0)", "inset(0 0 0% 0)"]);
-
   return (
-    <p className="relative max-w-5xl text-pretty text-3xl font-semibold leading-[1.12] tracking-tight text-slate-800/80 sm:text-4xl md:hidden">
-      <span>{mobileAboutCopy}</span>
-      <motion.span
-        aria-hidden="true"
-        className="absolute inset-0 text-pretty text-platinum"
-        style={{ clipPath: shouldReduceMotion ? "inset(0 0% 0 0)" : clipPath }}
-      >
-        {mobileAboutCopy}
-      </motion.span>
+    <p className="max-w-5xl text-pretty text-3xl font-semibold leading-[1.12] tracking-tight sm:text-4xl md:hidden">
+      {aboutWords.map(({ word, isAccent }, index) => (
+        <RevealWord key={`${word}-${index}`} index={index} total={aboutWords.length} progress={progress} isAccent={isAccent}>
+          {word}
+        </RevealWord>
+      ))}
     </p>
   );
 }
@@ -84,7 +82,7 @@ export function AboutRevealSection() {
   return (
     <section ref={sectionRef} className="relative min-h-[170svh] border-y border-line md:min-h-[280vh]">
       <div className="sticky top-0 flex h-[82svh] items-center overflow-hidden px-4 py-4 sm:px-6 md:min-h-screen md:py-24 lg:px-8">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.1),transparent_30rem)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(36,75,169,0.34),transparent_30rem)]" />
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent" />
 
         <div className="relative mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[0.32fr_1fr] lg:items-start">
@@ -99,10 +97,10 @@ export function AboutRevealSection() {
             </div>
             <MobileRevealText progress={smoothProgress} />
             <p className="hidden max-w-5xl text-pretty font-semibold leading-[1.12] tracking-tight md:block md:text-5xl lg:text-6xl">
-              {aboutWords.map(({ lineIndex, word }, index) => (
+              {aboutWords.map(({ lineIndex, word, isAccent }, index) => (
                 <span key={`${word}-${index}`}>
                   {index > 0 && lineIndex > aboutWords[index - 1].lineIndex ? <br className="hidden sm:block" /> : null}
-                  <RevealWord index={index} total={aboutWords.length} progress={smoothProgress}>
+                  <RevealWord index={index} total={aboutWords.length} progress={smoothProgress} isAccent={isAccent}>
                     {word}
                   </RevealWord>
                 </span>

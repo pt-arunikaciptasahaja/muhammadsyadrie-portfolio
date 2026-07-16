@@ -103,7 +103,7 @@ function useBlockActiveIndex(itemRefs: RefObject<Array<HTMLElement | null>>) {
 
 function DeployVisual() {
   return (
-    <div className="overflow-hidden rounded-[8px] border border-white/10 bg-[#0a0d12]/92 shadow-2xl">
+    <div className="overflow-hidden rounded-[8px] border border-line bg-[#143f99]/92 shadow-2xl">
       <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.035] px-4 py-3">
         <span className="size-3 rounded-full bg-white/70" />
         <span className="size-3 rounded-full bg-white/35" />
@@ -171,7 +171,7 @@ function GrowthVisual() {
 function ReliabilityVisual() {
   return (
     <div className="grid gap-4">
-      <div className="rounded-[8px] border border-white/10 bg-[#0a0d0f]/85 p-5">
+      <div className="rounded-[8px] border border-line bg-[#0f275f]/85 p-5">
         <div className="flex items-center gap-3 text-platinum">
           <CloudCog className="size-5" />
           <span className="font-mono text-xs uppercase tracking-[0.22em]">release pipeline</span>
@@ -196,8 +196,8 @@ function ReliabilityVisual() {
 
 function DataVisual() {
   return (
-    <div className="relative overflow-hidden rounded-[8px] border border-white/10 bg-[#080d12]/90 p-5">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.12),transparent_16rem)]" />
+    <div className="relative overflow-hidden rounded-[8px] border border-line bg-[#143f99]/90 p-5">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,89,74,0.16),transparent_16rem)]" />
       <div className="relative z-10">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3 text-platinum">
@@ -253,7 +253,7 @@ function ActiveVisual({ activeIndex }: { activeIndex: number }) {
 function MobileVisualBox({ activeIndex }: { activeIndex: number }) {
   return (
     <motion.div
-      className="relative mt-8 overflow-hidden rounded-[8px] border border-white/10 bg-black/40 p-4 shadow-[0_20px_70px_rgba(0,0,0,0.36)] backdrop-blur-md md:hidden"
+      className="relative mt-8 overflow-hidden rounded-[8px] border border-line bg-black/40 p-4 shadow-[0_20px_70px_rgba(15,39,95,0.42)] backdrop-blur-md md:hidden"
       initial={{ opacity: 0, y: 18, scale: 0.965, filter: "blur(8px)" }}
       whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
       viewport={{ once: true, amount: 0.35 }}
@@ -375,7 +375,7 @@ export function StickyScrollSection() {
                 animate={{ opacity: [0.42, 0.64, 0.42] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
-              <div className="relative h-full rounded-[8px] border border-white/10 bg-black/40 p-5 shadow-[0_24px_100px_rgba(0,0,0,0.42)] backdrop-blur-md">
+              <div className="relative h-full rounded-[8px] border border-line bg-black/40 p-5 shadow-[0_24px_100px_rgba(15,39,95,0.48)] backdrop-blur-md">
                 <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-4">
                   <div className="flex items-center gap-3">
                     <div className="grid size-10 place-items-center rounded-[8px] border border-white/10 bg-white/[0.035] text-platinum">

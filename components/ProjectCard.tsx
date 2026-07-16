@@ -17,13 +17,13 @@ export function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-8, 8]), { stiffness: 280, damping: 28 });
   const glareX = useTransform(pointerX, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(pointerY, [-0.5, 0.5], ["0%", "100%"]);
-  const glare = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(255, 255, 255, 0.16), transparent 34%)`;
+  const glare = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(255, 89, 74, 0.18), transparent 34%)`;
 
   return (
     <motion.button
       type="button"
       layoutId={`project-${project.id}`}
-      className={`group relative min-h-[17rem] overflow-hidden rounded-[8px] border border-line bg-panel p-0 text-left shadow-[0_1px_0_rgba(255,255,255,0.06)_inset] outline-none transition-colors hover:border-white/45 ${project.className}`}
+      className={`group relative min-h-[17rem] overflow-hidden rounded-[8px] border border-line bg-panel p-0 text-left shadow-[0_1px_0_rgba(252,255,218,0.08)_inset] outline-none transition-colors hover:border-cyan ${project.className}`}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.985 }}

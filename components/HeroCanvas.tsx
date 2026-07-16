@@ -41,7 +41,7 @@ function InteractiveText({ scrollYProgress }: InteractiveTextProps) {
     const targetRotationY = scrollSpin + THREE.MathUtils.clamp(state.pointer.x * 0.34, -0.32, 0.32) + magnet * state.pointer.x * 0.16;
     const targetRotationZ = scroll * -0.42 + state.pointer.x * -0.035 + magnet * state.pointer.x * -0.05;
     const isMobile = size.width < 768;
-    const mobileScale = isMobile ? 0.56 : 1;
+    const mobileScale = isMobile ? 0.68 : 1;
     const targetScale = THREE.MathUtils.lerp(1, 0.62, THREE.MathUtils.clamp(scroll * 1.15, 0, 1)) * mobileScale;
     const targetX = magnet * state.pointer.x * 0.32;
     const targetY = THREE.MathUtils.lerp(isMobile ? 0.42 : 0, 1.85, THREE.MathUtils.clamp(scroll * 1.1, 0, 1)) + magnet * state.pointer.y * 0.18;
@@ -80,12 +80,12 @@ function InteractiveText({ scrollYProgress }: InteractiveTextProps) {
             onPointerOut={handlePointerOut}
           >
             build.
-            <meshBasicMaterial color="#f8fafc" transparent opacity={0.12} depthWrite={false} />
+            <meshBasicMaterial color="#fcffda" transparent opacity={0.16} depthWrite={false} />
           </Text3D>
           <Text3D {...text3DProps} onPointerOver={handlePointerOver} onPointerOut={handlePointerOut}>
             build.
             <meshPhysicalMaterial
-              color="#f8fafc"
+              color="#ff594a"
               roughness={0.18}
               metalness={0}
               clearcoat={1}
@@ -113,17 +113,17 @@ export function HeroCanvas() {
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
-        <color attach="background" args={["#0b0f19"]} />
+        <color attach="background" args={["#1a1f47"]} />
         <ambientLight intensity={0.58} />
-        <directionalLight position={[3.5, 3.5, 4]} intensity={1.7} color="#f8fafc" />
-        <pointLight position={[-3, -1.5, 3]} intensity={1.35} color="#94a3b8" />
-        <pointLight position={[2.4, 1.8, 2.2]} intensity={1.8} color="#f8fafc" />
-        <pointLight position={[0, 0, 1.65]} intensity={0.7} color="#ffffff" />
+        <directionalLight position={[3.5, 3.5, 4]} intensity={1.7} color="#fcffda" />
+        <pointLight position={[-3, -1.5, 3]} intensity={1.35} color="#6170bb" />
+        <pointLight position={[2.4, 1.8, 2.2]} intensity={1.8} color="#ff594a" />
+        <pointLight position={[0, 0, 1.65]} intensity={0.7} color="#fff4d3" />
         <InteractiveText scrollYProgress={scrollYProgress} />
         <Environment preset="studio" background={false} environmentIntensity={0.45} />
         <Preload all />
       </Canvas>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(248,250,252,0.08),rgba(11,15,25,0.42)_38%,rgba(11,15,25,0.92)_78%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(252,255,218,0.1),rgba(20,63,153,0.42)_38%,rgba(26,31,71,0.94)_78%)]" />
     </div>
   );
 }

@@ -43,7 +43,7 @@ export function Loader() {
     <AnimatePresence>
       {isLoading ? (
         <motion.div
-          className="fixed inset-0 z-50 flex flex-col justify-between bg-[#0b0f19] px-5 py-6 sm:px-8 sm:py-8"
+          className="fixed inset-0 z-50 flex flex-col justify-between bg-[#1a1f47] px-5 py-6 sm:px-8 sm:py-8"
           exit={{ y: "-100%", transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
         >
           <div className="flex items-center justify-between gap-4">

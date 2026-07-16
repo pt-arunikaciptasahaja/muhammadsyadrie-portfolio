@@ -6,6 +6,14 @@
   color-scheme: dark;
   --cursor-x: 50vw;
   --cursor-y: 20vh;
+  --navy: #1a1f47;
+  --royal-blue: #143f99;
+  --deep-blue: #0f275f;
+  --bright-blue: #244ba9;
+  --ivory: #fcffda;
+  --warm-ivory: #fff4d3;
+  --periwinkle: #6170bb;
+  --coral: #ff594a;
   --font-geist-sans: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-geist-mono: "Geist Mono", "SFMono-Regular", "Menlo", ui-monospace, monospace;
 }
@@ -16,7 +24,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #0b0f19;
+  background: var(--navy);
 }
 
 body {
@@ -24,16 +32,16 @@ body {
   margin: 0;
   overflow-x: clip;
   background:
-    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(255, 255, 255, 0.11), transparent 28rem),
-    radial-gradient(ellipse at 50% -10%, rgba(255, 255, 255, 0.08), transparent 34rem),
-    radial-gradient(circle at 82% 8%, rgba(255, 255, 255, 0.05), transparent 28rem),
-    #0b0f19;
-  color: #f8fafc;
+    radial-gradient(circle at var(--cursor-x) var(--cursor-y), rgba(255, 89, 74, 0.12), transparent 28rem),
+    radial-gradient(ellipse at 50% -10%, rgba(36, 75, 169, 0.34), transparent 34rem),
+    radial-gradient(circle at 82% 8%, rgba(20, 63, 153, 0.3), transparent 28rem),
+    var(--navy);
+  color: var(--ivory);
 }
 
 ::selection {
-  background: rgba(255, 255, 255, 0.24);
-  color: #ffffff;
+  background: var(--coral);
+  color: var(--deep-blue);
 }
 
 @keyframes marquee-left {

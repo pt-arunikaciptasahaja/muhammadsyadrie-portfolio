@@ -9,25 +9,40 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        abyss: "#0b0f19",
-        graphite: "#111827",
-        panel: "#121827",
-        "panel-strong": "#182033",
-        line: "rgba(148, 163, 184, 0.18)",
-        platinum: "#f8fafc",
-        muted: "#94a3b8",
-        whiteglass: "rgba(255, 255, 255, 0.08)",
+        abyss: "#1a1f47",
+        graphite: "#0f275f",
+        panel: "#143f99",
+        "panel-strong": "#244ba9",
+        line: "rgba(97, 112, 187, 0.42)",
+        platinum: "#fcffda",
+        muted: "#6170bb",
+        white: "#fcffda",
+        black: "#0f275f",
+        whiteglass: "rgba(252, 255, 218, 0.08)",
+        slate: {
+          50: "#fcffda",
+          100: "#fcffda",
+          200: "#fff4d3",
+          300: "#fcffda",
+          400: "#6170bb",
+          500: "#6170bb",
+          600: "#244ba9",
+          700: "#143f99",
+          800: "#0f275f",
+          900: "#1a1f47",
+          950: "#0f275f"
+        },
         cyan: {
-          DEFAULT: "#f8fafc",
-          soft: "#e5e7eb"
+          DEFAULT: "#ff594a",
+          soft: "#ff6b51"
         },
         violet: {
-          DEFAULT: "#d1d5db",
-          soft: "#e5e7eb"
+          DEFAULT: "#6170bb",
+          soft: "#244ba9"
         },
         emerald: {
-          DEFAULT: "#f3f4f6",
-          soft: "#d1d5db"
+          DEFAULT: "#fcffda",
+          soft: "#fff4d3"
         }
       },
       fontFamily: {
@@ -35,8 +50,8 @@ const config: Config = {
         mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"]
       },
       boxShadow: {
-        glow: "0 0 48px rgba(255, 255, 255, 0.12)",
-        "violet-glow": "0 0 56px rgba(255, 255, 255, 0.12)"
+        glow: "0 0 48px rgba(97, 112, 187, 0.28)",
+        "violet-glow": "0 0 56px rgba(255, 89, 74, 0.18)"
       }
     }
   },

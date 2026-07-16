@@ -51,7 +51,7 @@ function MagneticButton({ href, label, Icon, showArrow = false, primary = false 
       href={href}
       className={
         primary
-          ? "inline-flex items-center gap-2 rounded-[6px] border border-white/35 bg-white/10 px-4 py-3 text-sm font-medium text-platinum transition hover:border-white/70 hover:bg-white/15"
+          ? "inline-flex items-center gap-2 rounded-[6px] border border-cyan bg-cyan px-4 py-3 text-sm font-semibold text-abyss transition hover:bg-cyan-soft"
           : "inline-flex items-center gap-2 rounded-[6px] border border-line bg-white/[0.035] px-4 py-3 text-sm font-medium text-slate-200 transition hover:border-white/40 hover:text-platinum"
       }
       onPointerMove={handlePointerMove}
@@ -159,7 +159,7 @@ export function OutroSection() {
               <MagneticButton href="https://github.com/mrizkysyadrie" label="GitHub" Icon={Github} />
             </motion.div>
 
-            <motion.div className="mt-12 flex justify-center md:hidden" style={{ y: connectY, opacity: connectOpacity }}>
+            <motion.div className="mt-12 flex w-full justify-center md:hidden" style={{ y: connectY, opacity: connectOpacity }}>
               <TextSpinner variant="compact" />
             </motion.div>
           </div>

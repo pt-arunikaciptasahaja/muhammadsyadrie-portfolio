@@ -63,13 +63,13 @@ function MarqueeRow() {
               key={`${mark.name}-${index}`}
               className="group flex h-24 shrink-0 items-center border-r border-white/10 bg-black/10 font-mono uppercase tracking-[0.2em] transition-[background-color,padding] duration-500 ease-out hover:bg-white/[0.065] hover:px-5 md:h-28 md:hover:px-8"
             >
-              <span className="grid h-full w-24 place-items-center border-r border-white/10 text-5xl font-semibold tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] transition-all duration-300 group-hover:text-platinum group-hover:[-webkit-text-stroke:1px_rgba(255,255,255,0)] md:w-28">
+              <span className="grid h-full w-24 place-items-center border-r border-white/10 text-5xl font-semibold tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(97,112,187,0.72)] transition-all duration-300 group-hover:text-platinum group-hover:[-webkit-text-stroke:1px_rgba(252,255,218,0)] md:w-28">
                 {mark.glyph}
               </span>
               <span className="max-w-[14rem] px-5 text-xs font-semibold leading-5 text-slate-300 transition-colors duration-300 group-hover:text-platinum md:max-w-none md:px-8 md:text-sm">
                 {mark.name}
               </span>
-              <span className="mr-5 grid size-8 place-items-center rounded-[6px] border border-white/10 bg-white/[0.025] text-platinum/70 transition-all duration-300 group-hover:rotate-90 group-hover:border-white/35 group-hover:text-platinum group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.35)] md:mr-8">
+              <span className="mr-5 grid size-8 place-items-center rounded-[6px] border border-white/10 bg-white/[0.025] text-platinum/70 transition-all duration-300 group-hover:rotate-90 group-hover:border-cyan group-hover:text-cyan group-hover:drop-shadow-[0_0_10px_rgba(255,89,74,0.42)] md:mr-8">
                 <SeparatorIcon className="size-4 fill-platinum/15" strokeWidth={1} />
               </span>
             </div>
