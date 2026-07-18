@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { motion } from "framer-motion";
 import { Circle, DatabaseZap, Diamond, Hexagon, Octagon, Square, Triangle } from "lucide-react";
 import { AboutRevealSection } from "@/components/AboutRevealSection";
@@ -26,6 +27,159 @@ const impactStats = [
   { value: "-40%", label: "User Friction & Bounce" },
   { value: "∞", label: "Scalability via AI & Automation" }
 ];
+const heroCopy =
+  "Fewer bottlenecks. Infinite leverage. I transform complex business logic into automated, high-performing platforms. By integrating applied AI and lean cloud architecture, I engineer systems that cut infrastructure overhead by 50%, reduce bounce rates by 40%, and turn manual processes into seamless digital experiences.";
+const scrambleCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?/";
+const glassCards = [
+  { metric: "01", label: "Cloud Logic", detail: "Lean operating layers" },
+  { metric: "02", label: "AI Flows", detail: "Automated decisions" },
+  { metric: "03", label: "Data Signals", detail: "Measured performance" },
+  { metric: "04", label: "Resilience", detail: "Fault-tolerant paths" },
+  { metric: "05", label: "Growth Loops", detail: "Compounding systems" }
+];
+type GlassStackStyle = CSSProperties & {
+  "--index": number;
+};
+type GlassStackContainerStyle = CSSProperties & {
+  "--progress": number;
+};
+
+function createScrambleText(copy: string) {
+  return copy
+    .split("")
+    .map((character) => (character === " " ? " " : scrambleCharacters[Math.floor(Math.random() * scrambleCharacters.length)]))
+    .join("");
+}
+
+function HeroScrambleText() {
+  const [displayText, setDisplayText] = useState("");
+  const stableFallback = useMemo(() => heroCopy.replace(/\S/g, "0"), []);
+
+  useEffect(() => {
+    let frameId = 0;
+    let timeoutId = 0;
+
+    timeoutId = window.setTimeout(() => {
+      const start = performance.now();
+      const duration = 1000;
+
+      const animate = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const resolvedCount = Math.floor(progress * heroCopy.length);
+
+        setDisplayText(
+          heroCopy
+            .split("")
+            .map((character, index) => {
+              if (index < resolvedCount) {
+                return character;
+              }
+
+              return character === " " ? " " : scrambleCharacters[Math.floor(Math.random() * scrambleCharacters.length)];
+            })
+            .join("")
+        );
+
+        if (progress < 1) {
+          frameId = window.requestAnimationFrame(animate);
+        } else {
+          setDisplayText(heroCopy);
+        }
+      };
+
+      setDisplayText(createScrambleText(heroCopy));
+      frameId = window.requestAnimationFrame(animate);
+    }, 1000);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
+  return (
+    <motion.p
+      className="mt-5 min-h-[14rem] max-w-3xl rounded-[6px] border border-platinum/25 bg-platinum/[0.055] p-4 font-mono text-sm leading-7 text-slate-300 sm:mt-6 sm:min-h-[11rem] sm:p-5 sm:text-base"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1, duration: 0.18 }}
+    >
+      {displayText || stableFallback}
+    </motion.p>
+  );
+}
+
+function HeroGlassStack() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef(0);
+  const targetProgressRef = useRef(0);
+  const displayProgressRef = useRef(0);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const measureProgress = () => {
+      const section = sectionRef.current;
+
+      if (!section) {
+        return;
+      }
+
+      const stage = section.querySelector<HTMLElement>(".hero-glass-stage");
+      const stageTop = stage?.getBoundingClientRect().top ?? section.getBoundingClientRect().top;
+      const isMobile = window.matchMedia("(max-width: 767px)").matches;
+      const travelDistance = window.innerHeight * (isMobile ? 0.9 : 0.72);
+
+      targetProgressRef.current = Math.min(Math.max((window.innerHeight - stageTop) / travelDistance, 0), 1);
+    };
+
+    const animateProgress = () => {
+      const current = displayProgressRef.current;
+      const target = targetProgressRef.current;
+      const nextProgress = current + (target - current) * 0.085;
+      const settledProgress = Math.abs(target - nextProgress) < 0.0005 ? target : nextProgress;
+
+      displayProgressRef.current = settledProgress;
+      sectionRef.current?.style.setProperty("--progress", settledProgress.toString());
+
+      if (isMounted) {
+        frameRef.current = window.requestAnimationFrame(animateProgress);
+      }
+    };
+
+    const requestUpdate = () => {
+      measureProgress();
+    };
+
+    requestUpdate();
+    frameRef.current = window.requestAnimationFrame(animateProgress);
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      isMounted = false;
+      window.cancelAnimationFrame(frameRef.current);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, []);
+
+  return (
+    <div ref={sectionRef} className="hero-data-stream lg:col-span-2" style={{ "--progress": 0 } as GlassStackContainerStyle}>
+      <div className="hero-glass-sticky">
+        <div className="hero-glass-stage">
+          {glassCards.map((card, index) => (
+            <article key={card.label} className="glass-card" style={{ "--index": index } as GlassStackStyle}>
+              <span className="font-mono text-xs uppercase tracking-[0.24em] text-slate-400">{card.metric}</span>
+              <h3 className="mt-5 text-2xl font-semibold tracking-tight text-platinum">{card.label}</h3>
+              <p className="mt-2 font-mono text-xs uppercase tracking-[0.16em] text-slate-400">{card.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function PortfolioExperience() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -36,26 +190,39 @@ export function PortfolioExperience() {
 
       <section className="relative flex min-h-[96svh] items-end bg-abyss px-4 pb-10 pt-[38svh] sm:min-h-[138svh] sm:px-6 sm:pb-24 sm:pt-[76svh] lg:min-h-[132vh] lg:px-8 lg:pb-24 lg:pt-[74vh]">
         <HeroCanvas />
-        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex items-center gap-x-2 text-sm text-slate-400">
+        <div className="hero-blueprint-grid pointer-events-none absolute inset-0 z-[1]" />
+        <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-8 rounded-[8px] border border-white/10 bg-[#143F99]/80 p-5 shadow-glow backdrop-blur-xl sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-x-12 lg:gap-y-8 lg:p-10">
+          <div>
+            <motion.div
+              className="flex items-center gap-x-2 text-sm text-slate-400"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
               <DatabaseZap className="size-4" />
-              Cloud-native ecosystems // Web3 interfaces
-            </div>
+              Full-stack engineer for reliable product platforms
+            </motion.div>
 
-            <h1 className="mt-7 max-w-5xl bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-4xl font-semibold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
+            <motion.h1
+              className="mt-7 max-w-5xl text-4xl font-semibold tracking-tight text-platinum sm:text-6xl lg:text-7xl"
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.72, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
               Crafting fault-tolerant products and intelligent systems of scale.
-            </h1>
+            </motion.h1>
 
-            <p className="mt-5 max-w-3xl text-base font-light leading-7 text-slate-300 sm:mt-6 sm:text-xl sm:leading-snug">
-              Fewer bottlenecks. Infinite leverage.
-              <br className="hidden sm:block" />
-              I transform complex business logic into automated, high-performing platforms. By integrating applied AI and lean cloud architecture, I engineer systems that cut infrastructure overhead by 50%, reduce bounce rates by 40%, and turn manual processes into seamless digital experiences.
-            </p>
+            <HeroScrambleText />
+
+            <motion.a
+              href="#selected-work"
+              className="mt-6 inline-flex min-h-12 items-center rounded-[6px] border border-cyan bg-cyan px-5 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-abyss transition hover:bg-cyan-soft"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.9, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            >
+              Start transmission
+            </motion.a>
 
             <div className="mt-7 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-3 md:mt-8">
               {badges.map(({ label, mobileLabel, Icon }) => (
@@ -69,7 +236,8 @@ export function PortfolioExperience() {
                 </span>
               ))}
             </div>
-          </motion.div>
+
+          </div>
 
           <motion.div
             className="hidden rounded-[8px] border border-line bg-panel/55 p-8 shadow-glow backdrop-blur-xl lg:block"
@@ -95,6 +263,8 @@ export function PortfolioExperience() {
               ))}
             </div>
           </motion.div>
+
+          <HeroGlassStack />
         </div>
       </section>
 
@@ -102,7 +272,7 @@ export function PortfolioExperience() {
 
       <AboutRevealSection />
 
-      <section className="relative px-4 py-24 sm:px-6 lg:px-8">
+      <section id="selected-work" className="relative px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>

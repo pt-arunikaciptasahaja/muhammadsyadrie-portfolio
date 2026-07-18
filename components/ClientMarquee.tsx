@@ -61,15 +61,15 @@ function MarqueeRow() {
           return (
             <div
               key={`${mark.name}-${index}`}
-              className="group flex h-24 shrink-0 items-center border-r border-white/10 bg-black/10 font-mono uppercase tracking-[0.2em] transition-[background-color,padding] duration-500 ease-out hover:bg-white/[0.065] hover:px-5 md:h-28 md:hover:px-8"
+              className="group flex h-24 shrink-0 items-center border-r border-white/10 bg-white/[0.065] px-5 font-mono uppercase tracking-[0.2em] transition-[background-color,padding] duration-500 ease-out hover:bg-white/[0.085] md:h-28 md:px-8"
             >
-              <span className="grid h-full w-24 place-items-center border-r border-white/10 text-5xl font-semibold tracking-tight text-transparent [-webkit-text-stroke:1px_rgba(97,112,187,0.72)] transition-all duration-300 group-hover:text-platinum group-hover:[-webkit-text-stroke:1px_rgba(252,255,218,0)] md:w-28">
+              <span className="grid h-full w-24 place-items-center border-r border-white/10 text-5xl font-semibold tracking-tight text-platinum [-webkit-text-stroke:1px_rgba(252,255,218,0)] transition-all duration-300 md:w-28">
                 {mark.glyph}
               </span>
-              <span className="max-w-[14rem] px-5 text-xs font-semibold leading-5 text-slate-300 transition-colors duration-300 group-hover:text-platinum md:max-w-none md:px-8 md:text-sm">
+              <span className="max-w-[14rem] px-5 text-xs font-semibold leading-5 text-platinum transition-colors duration-300 md:max-w-none md:px-8 md:text-sm">
                 {mark.name}
               </span>
-              <span className="mr-5 grid size-8 place-items-center rounded-[6px] border border-white/10 bg-white/[0.025] text-platinum/70 transition-all duration-300 group-hover:rotate-90 group-hover:border-cyan group-hover:text-cyan group-hover:drop-shadow-[0_0_10px_rgba(255,89,74,0.42)] md:mr-8">
+              <span className="mr-5 grid size-8 rotate-90 place-items-center rounded-[6px] border border-cyan bg-white/[0.025] text-cyan drop-shadow-[0_0_10px_rgba(255,89,74,0.42)] transition-all duration-300 group-hover:rotate-180 md:mr-8">
                 <SeparatorIcon className="size-4 fill-platinum/15" strokeWidth={1} />
               </span>
             </div>
@@ -82,8 +82,8 @@ function MarqueeRow() {
 
 export function ClientMarquee() {
   return (
-    <section className="relative px-4 pb-16 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl border-y border-line py-10">
+    <section className="relative px-4 py-24 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl border-y border-line py-12">
         <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.28em] text-muted">Technical Stack</p>

@@ -41,9 +41,9 @@ const sections: CapabilitySection[] = [
   {
     title: "Orchestrate Data Products",
     eyebrow: "Web3 and dense technical UI",
-    body: "Design data-heavy interfaces and backend patterns for realtime dashboards, market intelligence, token research, and systems-minded product delivery.",
-    proof: "Built Alpha Stream, a crypto market-intelligence terminal for Pump.fun ecosystem exploration and dense market-data workflows.",
-    tags: ["Solana", "Go", "Rust", "Realtime UI"],
+    body: "Design Web3 intelligence surfaces for Solana-native activity, token discovery, wallet behavior, and realtime market context.",
+    proof: "Built Alpha Stream, a crypto market-intelligence terminal for Pump.fun ecosystem exploration and dense Solana market-data workflows.",
+    tags: ["Solana", "Web3", "Pump.fun", "Realtime UI"],
     gradient: "from-white/18 via-transparent to-slate-500/12"
   }
 ];
@@ -196,32 +196,41 @@ function ReliabilityVisual() {
 
 function DataVisual() {
   return (
-    <div className="relative overflow-hidden rounded-[8px] border border-line bg-[#143f99]/90 p-5">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,89,74,0.16),transparent_16rem)]" />
-      <div className="relative z-10">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3 text-platinum">
-            <DatabaseZap className="size-5" />
-            <span className="font-mono text-xs uppercase tracking-[0.22em]">alpha stream terminal</span>
-          </div>
-          <span className="rounded-[6px] border border-white/25 bg-white/10 px-2 py-1 font-mono text-xs text-platinum">live</span>
+    <div className="grid gap-4">
+      <div className="rounded-[8px] border border-line bg-[#0f275f]/85 p-5">
+        <div className="flex items-center gap-3 text-platinum">
+          <DatabaseZap className="size-5" />
+          <span className="font-mono text-xs uppercase tracking-[0.22em]">alpha stream terminal</span>
         </div>
-        <div className="grid gap-3">
+        <div className="mt-6 grid gap-3">
           {[
             ["SOL/USDC", "+12.4%", "token signal"],
             ["Pump.fun", "829 tx", "stream volume"],
             ["Wallet graph", "44 nodes", "research view"],
             ["Latency", "88 ms", "event update"]
-          ].map(([name, value, label]) => (
-            <div key={name} className="grid grid-cols-[1fr_auto] gap-3 rounded-[8px] border border-white/10 bg-white/[0.035] p-4">
-              <div>
-                <p className="text-sm font-medium text-platinum">{name}</p>
-                <p className="mt-1 font-mono text-xs uppercase tracking-[0.16em] text-slate-500">{label}</p>
-              </div>
-              <p className="font-mono text-sm text-platinum">{value}</p>
-            </div>
+          ].map(([name, value, label], index) => (
+            <motion.div
+              key={name}
+              className="flex items-center justify-between rounded-[8px] border border-white/10 bg-white/[0.035] px-4 py-3"
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.08, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span>
+                <span className="block text-sm text-slate-200">{name}</span>
+                <span className="mt-1 block font-mono text-[0.65rem] uppercase tracking-[0.16em] text-slate-500">{label}</span>
+              </span>
+              <span className="font-mono text-xs text-platinum">{value}</span>
+            </motion.div>
           ))}
         </div>
+      </div>
+      <div className="rounded-[8px] border border-white/20 bg-white/10 p-5">
+        <p className="font-mono text-xs uppercase tracking-[0.22em] text-platinum">alpha stream</p>
+        <p className="mt-3 text-4xl font-semibold tracking-tight text-platinum">live</p>
+        <p className="mt-2 text-sm leading-6 text-slate-300">
+          Crypto market-intelligence terminal for Pump.fun ecosystem exploration and dense market-data workflows.
+        </p>
       </div>
     </div>
   );

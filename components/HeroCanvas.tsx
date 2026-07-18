@@ -34,29 +34,39 @@ function InteractiveText({ scrollYProgress }: InteractiveTextProps) {
 
     const scroll = scrollYProgress.get();
     const isHovering = isHoveringRef.current;
-    const scrollSpin = scroll * Math.PI * 4;
+    const isMobile = size.width < 768;
+    const pointerSensitivity = isMobile ? 1.55 : 1;
+    const scrollSensitivity = isMobile ? 1.35 : 1;
+    const motionResponse = isMobile ? 1.22 : 1;
+    const pointerX = state.pointer.x * pointerSensitivity;
+    const pointerY = state.pointer.y * pointerSensitivity;
+    const hoverFloat = Math.sin(state.clock.elapsedTime * 1.18);
+    const hoverDrift = Math.cos(state.clock.elapsedTime * 0.82);
+    const scrollSpin = scroll * Math.PI * 4 * scrollSensitivity;
     const magnet = isHovering ? 1 : 0;
     const targetRotationX =
-      THREE.MathUtils.clamp(state.pointer.y * -0.24, -0.22, 0.22) + Math.sin(scroll * Math.PI) * 0.16 + magnet * state.pointer.y * -0.08;
-    const targetRotationY = scrollSpin + THREE.MathUtils.clamp(state.pointer.x * 0.34, -0.32, 0.32) + magnet * state.pointer.x * 0.16;
-    const targetRotationZ = scroll * -0.42 + state.pointer.x * -0.035 + magnet * state.pointer.x * -0.05;
-    const isMobile = size.width < 768;
+      THREE.MathUtils.clamp(pointerY * -0.24, -0.28, 0.28) + Math.sin(scroll * Math.PI * scrollSensitivity) * 0.16 + magnet * pointerY * -0.08 + hoverFloat * 0.025;
+    const targetRotationY = scrollSpin + THREE.MathUtils.clamp(pointerX * 0.34, -0.4, 0.4) + magnet * pointerX * 0.16 + hoverDrift * 0.018;
+    const targetRotationZ = scroll * -0.42 * scrollSensitivity + pointerX * -0.035 + magnet * pointerX * -0.05 + hoverFloat * 0.012;
     const mobileScale = isMobile ? 0.68 : 1;
-    const targetScale = THREE.MathUtils.lerp(1, 0.62, THREE.MathUtils.clamp(scroll * 1.15, 0, 1)) * mobileScale;
-    const targetX = magnet * state.pointer.x * 0.32;
-    const targetY = THREE.MathUtils.lerp(isMobile ? 0.42 : 0, 1.85, THREE.MathUtils.clamp(scroll * 1.1, 0, 1)) + magnet * state.pointer.y * 0.18;
+    const targetScale = THREE.MathUtils.lerp(1, 0.62, THREE.MathUtils.clamp(scroll * 1.15, 0, 1)) * mobileScale * (1 + hoverDrift * 0.008);
+    const targetX = magnet * pointerX * 0.32 + hoverDrift * 0.035;
+    const targetY =
+      THREE.MathUtils.lerp(isMobile ? 0.42 : 0, 1.85, THREE.MathUtils.clamp(scroll * 1.1 * scrollSensitivity, 0, 1)) +
+      magnet * pointerY * 0.18 +
+      hoverFloat * 0.085;
     const targetZ = THREE.MathUtils.lerp(0, -0.85, THREE.MathUtils.clamp(scroll, 0, 1));
-    const jelly = magnet * (0.04 + Math.abs(state.pointer.x) * 0.035);
+    const jelly = magnet * (0.04 + Math.abs(pointerX) * 0.035);
 
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.07);
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotationY, 0.085);
-    groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotationZ, 0.06);
-    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetX, isHovering ? 0.105 : 0.055);
-    groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, isHovering ? 0.105 : 0.065);
-    groupRef.current.position.z = THREE.MathUtils.lerp(groupRef.current.position.z, targetZ + magnet * 0.18, 0.065);
-    groupRef.current.scale.x = THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale * (1 + jelly), 0.085);
-    groupRef.current.scale.y = THREE.MathUtils.lerp(groupRef.current.scale.y, targetScale * (1 - jelly * 0.55), 0.085);
-    groupRef.current.scale.z = THREE.MathUtils.lerp(groupRef.current.scale.z, targetScale * (1 + jelly * 0.35), 0.085);
+    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotationX, 0.07 * motionResponse);
+    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotationY, 0.085 * motionResponse);
+    groupRef.current.rotation.z = THREE.MathUtils.lerp(groupRef.current.rotation.z, targetRotationZ, 0.06 * motionResponse);
+    groupRef.current.position.x = THREE.MathUtils.lerp(groupRef.current.position.x, targetX, (isHovering ? 0.105 : 0.055) * motionResponse);
+    groupRef.current.position.y = THREE.MathUtils.lerp(groupRef.current.position.y, targetY, (isHovering ? 0.105 : 0.065) * motionResponse);
+    groupRef.current.position.z = THREE.MathUtils.lerp(groupRef.current.position.z, targetZ + magnet * 0.18, 0.065 * motionResponse);
+    groupRef.current.scale.x = THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale * (1 + jelly), 0.085 * motionResponse);
+    groupRef.current.scale.y = THREE.MathUtils.lerp(groupRef.current.scale.y, targetScale * (1 - jelly * 0.55), 0.085 * motionResponse);
+    groupRef.current.scale.z = THREE.MathUtils.lerp(groupRef.current.scale.z, targetScale * (1 + jelly * 0.35), 0.085 * motionResponse);
   });
 
   const handlePointerOver = () => {
@@ -85,7 +95,7 @@ function InteractiveText({ scrollYProgress }: InteractiveTextProps) {
           <Text3D {...text3DProps} onPointerOver={handlePointerOver} onPointerOut={handlePointerOut}>
             build.
             <meshPhysicalMaterial
-              color="#ff594a"
+              color="#fcffda"
               roughness={0.18}
               metalness={0}
               clearcoat={1}

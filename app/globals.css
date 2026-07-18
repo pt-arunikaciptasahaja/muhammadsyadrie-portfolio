@@ -76,6 +76,130 @@ body {
   animation: marquee-right 38s linear infinite;
 }
 
+.hero-blueprint-grid {
+  opacity: 0;
+  background-image:
+    linear-gradient(to right, rgba(252, 255, 218, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(252, 255, 218, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 0%, transparent 0%);
+  animation: blueprint-grid-draw 0.5s ease-out forwards;
+}
+
+.hero-data-stream {
+  position: relative;
+  min-height: clamp(24rem, 68svh, 32rem);
+  margin: -0.75rem -1.25rem -1rem;
+  border-top: 1px solid var(--line);
+  overflow: clip;
+  --progress: 0;
+}
+
+.hero-glass-sticky {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: clamp(19rem, 50svh, 27rem);
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: clamp(1rem, 3vw, 2rem);
+  pointer-events: none;
+}
+
+.hero-glass-sticky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(252, 255, 218, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(252, 255, 218, 0.04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(90deg, black, black 72%, transparent);
+  opacity: 0.72;
+}
+
+.hero-glass-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes blueprint-grid-draw {
+  0% {
+    opacity: 0;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 0%, transparent 0%);
+  }
+
+  100% {
+    opacity: 1;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 100%, transparent 100%);
+  }
+}
+
+.glass-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: calc(20 - var(--index));
+  display: flex;
+  width: clamp(9.75rem, 19vw, 12.25rem);
+  height: clamp(9.75rem, 19vw, 12.25rem);
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(252, 255, 218, 0.12), rgba(252, 255, 218, 0.035)),
+    rgba(20, 63, 153, 0.34);
+  box-shadow:
+    0 0 48px rgba(97, 112, 187, 0.2),
+    inset 0 1px 0 rgba(252, 255, 218, 0.16);
+  padding: 1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform:
+    translate(
+      calc((var(--index) * 1rem * (1 - var(--progress))) + (var(--index) * clamp(7.5rem, 18vw, 14rem) * var(--progress))),
+      calc((var(--index) * 0.82rem * (1 - var(--progress))) + (var(--index) * 1.05rem * var(--progress)))
+    )
+    rotate(calc(var(--index) * 0.8deg * (1 - var(--progress))));
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  .hero-data-stream {
+    min-height: clamp(29rem, 78svh, 34rem);
+  }
+
+  .hero-glass-sticky {
+    height: clamp(25rem, 70svh, 32rem);
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .glass-card {
+    left: 50%;
+    width: clamp(10rem, 58vw, 13rem);
+    height: clamp(10rem, 58vw, 13rem);
+    padding: 1rem;
+    transform:
+      translate(
+        calc(-50% + (var(--index) * 0.42rem * (1 - var(--progress)))),
+        calc((var(--index) * 0.7rem * (1 - var(--progress))) + (var(--index) * clamp(6.2rem, 28vw, 8.4rem) * var(--progress)))
+      )
+      rotate(calc(var(--index) * 0.8deg * (1 - var(--progress))));
+  }
+
+  .glass-card h3 {
+    font-size: 1.25rem;
+    line-height: 1.15;
+  }
+
+  .glass-card p,
+  .glass-card span {
+    font-size: 0.62rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

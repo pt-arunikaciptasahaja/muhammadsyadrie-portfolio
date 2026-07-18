@@ -60,13 +60,13 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[0.74fr_1.26fr] lg:items-stretch">
-        <div className="flex min-h-[25rem] flex-col justify-between rounded-[8px] border border-line bg-abyss/70 p-5">
+        <div className="flex min-h-[25rem] flex-col justify-between rounded-[8px] border border-abyss/15 bg-[#fffcf0] p-5">
           <div>
-            <div className="relative inline-flex max-w-full overflow-hidden rounded-[8px] border border-white/25 bg-white/10 px-4 py-3">
+            <div className="relative inline-flex max-w-full overflow-hidden rounded-[8px] border border-abyss/20 bg-abyss/[0.04] px-4 py-3">
               <AnimatePresence mode="wait">
                 <motion.h3
                   key={activeProject.id}
-                  className="relative z-10 text-2xl font-semibold tracking-tight text-platinum md:text-3xl"
+                  className="relative z-10 text-2xl font-semibold tracking-tight text-abyss md:text-3xl"
                   initial={{ y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -18, opacity: 0 }}
@@ -82,7 +82,7 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
                 animate={{ scaleX: isPaused ? 0 : 1 }}
                 transition={{ duration: SLIDE_DURATION_MS / 1000, ease: "linear" }}
               />
-              <span className="pointer-events-none absolute inset-0 rounded-[8px] ring-1 ring-inset ring-white/25" />
+              <span className="pointer-events-none absolute inset-0 rounded-[8px] ring-1 ring-inset ring-abyss/15" />
             </div>
 
             <AnimatePresence mode="wait">
@@ -93,11 +93,11 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
                 exit={{ y: -18, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 200, damping: 24 }}
               >
-                <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-platinum">{activeProject.group}</p>
-                <p className="mt-3 text-base leading-7 text-slate-300">{activeProject.summary}</p>
+                <p className="mt-6 font-mono text-xs uppercase tracking-[0.24em] text-abyss/70">{activeProject.group}</p>
+                <p className="mt-3 text-base leading-7 text-abyss/75">{activeProject.summary}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {activeProject.stack.slice(0, 5).map((item) => (
-                    <span key={item} className="rounded-[6px] border border-line bg-white/[0.035] px-3 py-1.5 text-sm text-slate-300">
+                    <span key={item} className="rounded-[6px] border border-abyss/15 bg-abyss/[0.035] px-3 py-1.5 text-sm text-abyss/70">
                       {item}
                     </span>
                   ))}
@@ -106,7 +106,7 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
             </AnimatePresence>
           </div>
 
-          <div className="mt-8 flex items-center justify-between gap-4 border-t border-line pt-5">
+          <div className="mt-8 flex items-center justify-between gap-4 border-t border-abyss/15 pt-5">
             <button
               type="button"
               onClick={() => onSelect(activeProject)}
@@ -115,8 +115,8 @@ export function ProjectReel({ projects, onSelect }: ProjectReelProps) {
               Open case study
               <ArrowUpRight className="size-4" />
             </button>
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
-              Next / {nextProject.title}
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-abyss/55">
+              Next / <strong className="font-semibold text-abyss">{nextProject.title}</strong>
             </span>
           </div>
         </div>

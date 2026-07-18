@@ -2,7 +2,7 @@
 
 import { MotionValue, motion, useMotionValue, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
-import { ComponentType, PointerEvent, useRef } from "react";
+import { ComponentType, PointerEvent, useEffect, useRef, useState } from "react";
 import { TextSpinner } from "@/components/TextSpinner";
 
 type MagneticButtonProps = {
@@ -78,20 +78,37 @@ function RotatingOutroObject({ rotate, opacity, y }: RotatingOutroObjectProps) {
   );
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const updateMatch = () => setIsMobile(mediaQuery.matches);
+
+    updateMatch();
+    mediaQuery.addEventListener("change", updateMatch);
+
+    return () => mediaQuery.removeEventListener("change", updateMatch);
+  }, []);
+
+  return isMobile;
+}
+
 export function OutroSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"]
   });
 
-  const nameYRaw = useTransform(scrollYProgress, [0, 0.45], [0, -100]);
-  const nameOpacityRaw = useTransform(scrollYProgress, [0, 0.45], [1, 0]);
-  const connectYRaw = useTransform(scrollYProgress, [0.45, 0.6], [100, 0]);
-  const connectOpacityRaw = useTransform(scrollYProgress, [0.45, 0.6], [0, 1]);
-  const lineScaleRaw = useTransform(scrollYProgress, [0.42, 0.6], [0, 1]);
+  const nameYRaw = useTransform(scrollYProgress, isMobile ? [0, 0.56] : [0, 0.45], isMobile ? [0, -64] : [0, -100]);
+  const nameOpacityRaw = useTransform(scrollYProgress, isMobile ? [0, 0.5, 0.62] : [0, 0.45], isMobile ? [1, 0.16, 0] : [1, 0]);
+  const connectYRaw = useTransform(scrollYProgress, isMobile ? [0.48, 0.72] : [0.45, 0.6], isMobile ? [72, 0] : [100, 0]);
+  const connectOpacityRaw = useTransform(scrollYProgress, isMobile ? [0.48, 0.72] : [0.45, 0.6], [0, 1]);
+  const lineScaleRaw = useTransform(scrollYProgress, isMobile ? [0.5, 0.74] : [0.42, 0.6], [0, 1]);
 
-  const springConfig = { stiffness: 120, damping: 24, mass: 0.65 };
+  const springConfig = isMobile ? { stiffness: 78, damping: 28, mass: 0.95 } : { stiffness: 120, damping: 24, mass: 0.65 };
   const nameY = useSpring(nameYRaw, springConfig);
   const nameOpacity = useSpring(nameOpacityRaw, springConfig);
   const connectY = useSpring(connectYRaw, springConfig);
@@ -168,7 +185,7 @@ export function OutroSection() {
 
       <footer className="border-t border-line px-4 py-8 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-slate-500 md:flex-row md:items-center">
-          <p>Jakarta, Indonesia / Open to relocation across Germany, EU, Canada, Australia, and UAE.</p>
+          <p>Jakarta, Indonesia / Available for global engineering opportunities and relocation.</p>
           <p className="font-mono uppercase tracking-[0.18em]">mrizkysyadrie.dev</p>
         </div>
       </footer>
